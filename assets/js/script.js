@@ -1,7 +1,3 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-//go to mini project for clock
-// if dayjshr > time past else present else future
 let currentTime = $('#currentDay')
 var scheduler = [
   {
@@ -110,12 +106,13 @@ $(function () {
   }).appendTo('.saveBtn')
 
   function renderStorage () {
-    $('textarea').each(function() {
+    $('textarea').each(function(el) {
       $(this).val(JSON.parse(
-        localStorage.getItem(hr0, hr1, hr2, hr3, hr4, hr5, hr6, hr7, hr8)
+        localStorage.getItem(localStorage.key(el)),
       ))
     })
   };
+
   renderStorage()
 
   $('.saveBtn').click(function(e){
@@ -126,6 +123,7 @@ $(function () {
       console.log(el.value)
       localStorage.setItem(el.id, JSON.stringify(el.value))
     })
+    renderStorage()
     })
   
   // TODO: Add code to get any user input that was saved in localStorage and set
