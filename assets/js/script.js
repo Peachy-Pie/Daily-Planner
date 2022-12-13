@@ -1,4 +1,5 @@
 let currentTime = $('#currentDay')
+let ids = '';
 var scheduler = [
   {
       id: "hr0",
@@ -105,26 +106,32 @@ $(function () {
     class: 'fas fa-save',
   }).appendTo('.saveBtn')
 
+var textValue = {};
+Object.entries(localStorage).forEach(([key, value]) => {
+  if (key.startsWith("hr")) {
+    textValue[key] = value;
+  }
+});
+console.log(textValue);
+
   function renderStorage () {
-    $('textarea').each(function(el) {
+    $('textarea').each(function(key) {
       $(this).val(JSON.parse(
-        localStorage.getItem(localStorage.key(el)),
+        localStorage.getItem(localStorage.key(key)),
       ))
     })
   };
 
-  renderStorage()
-
   $('.saveBtn').click(function(e){
     e.preventDefault();
-    let ids = '';
     $(this).siblings().each(function(idx, el) {
       ids = ('#' + el.id)
-      console.log(el.value)
       localStorage.setItem(el.id, JSON.stringify(el.value))
     })
     renderStorage()
     })
+
+    renderStorage()
   
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
